@@ -1,10 +1,15 @@
 import React from 'react'
 import App from 'next/app'
 import Head from 'next/head'
+
+import { Provider as ReduxProvider } from 'react-redux'
+
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import 'typeface-roboto'
+
+import createStore from '../config/store'
 
 import theme from '../theme'
 
@@ -32,7 +37,9 @@ export default class MyApp extends App {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <Component {...pageProps} />
+          <ReduxProvider store={createStore()}>
+            <Component {...pageProps} />
+          </ReduxProvider>
         </ThemeProvider>
       </React.Fragment>
     )
