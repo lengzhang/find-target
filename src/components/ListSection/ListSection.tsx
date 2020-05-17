@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
+import MuiGrid from '@material-ui/core/Grid'
 import MuiButton from '@material-ui/core/Button'
 import MuiIconButton from '@material-ui/core/IconButton'
 
@@ -44,17 +45,17 @@ const ListSection: React.FC = () => {
       showChildren={list.length > 0}
       action={renderCleanButton()}
     >
-      {list.map((item, index) => {
-        return (
-          <MuiButton
-            key={index}
-            variant="outlined"
-            onClick={onListRemove(index)}
-          >
-            {item}
-          </MuiButton>
-        )
-      })}
+      <MuiGrid container spacing={1}>
+        {list.map((item, index) => {
+          return (
+            <MuiGrid item key={index}>
+              <MuiButton variant="outlined" onClick={onListRemove(index)}>
+                {item}
+              </MuiButton>
+            </MuiGrid>
+          )
+        })}
+      </MuiGrid>
     </Block>
   )
 }

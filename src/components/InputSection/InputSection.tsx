@@ -5,6 +5,7 @@ import {
   InputKeyType,
   changeInput,
   listPushString,
+  calculateResult,
 } from '../../reducer'
 
 import MuiGrid from '@material-ui/core/Grid'
@@ -58,6 +59,7 @@ const InputSection: React.FC = () => {
           label="Target"
           value={target}
           onChange={onChange('target')}
+          onKeyPress={onEnterPress(() => dispatch(calculateResult()))}
           type="number"
         />
       </MuiGrid>

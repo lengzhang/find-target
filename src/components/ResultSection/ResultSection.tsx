@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import MuiButton from '@material-ui/core/Button'
+import MuiGrid from '@material-ui/core/Grid'
 import MuiIconButton from '@material-ui/core/IconButton'
 
 import ClearAllIcon from '@material-ui/icons/ClearAll'
@@ -43,11 +43,15 @@ const ResultSection: React.FC = () => {
       showChildren={result.length > 0}
       action={renderCleanButton()}
     >
-      {result.map((list, index) => {
-        return (
-          <ResultItem key={index} index={index} list={list} target={target} />
-        )
-      })}
+      <MuiGrid container spacing={2}>
+        {result.map((list, index) => {
+          return (
+            <MuiGrid item key={index} xs={12}>
+              <ResultItem index={index} list={list} target={target} />
+            </MuiGrid>
+          )
+        })}
+      </MuiGrid>
     </Block>
   )
 }
