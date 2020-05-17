@@ -7,9 +7,9 @@ import MuiPaper from '@material-ui/core/Paper'
 import MuiTypography from '@material-ui/core/Typography'
 
 import InputSection from '../InputSection'
+import CalculateButton from '../CalculateButton'
 import ListSection from '../ListSection'
-
-import { listPush } from '../../reducer/list'
+import ResultSection from '../ResultSection'
 
 const App: React.FC = () => {
   const dispatch = useDispatch()
@@ -26,7 +26,13 @@ const App: React.FC = () => {
             <InputSection />
           </MuiBox>
           <MuiBox marginTop={2}>
+            <CalculateButton />
+          </MuiBox>
+          <MuiBox marginTop={2}>
             <ListSection />
+          </MuiBox>
+          <MuiBox marginTop={2}>
+            <ResultSection />
           </MuiBox>
         </MuiBox>
       </MuiPaper>
