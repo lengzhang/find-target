@@ -46,7 +46,11 @@ const ListSection: React.FC = () => {
     >
       {list.map((item, index) => {
         return (
-          <MuiButton variant="outlined" onClick={onListRemove(index)}>
+          <MuiButton
+            key={index}
+            variant="outlined"
+            onClick={onListRemove(index)}
+          >
             {item}
           </MuiButton>
         )

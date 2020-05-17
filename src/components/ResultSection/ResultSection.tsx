@@ -44,7 +44,9 @@ const ResultSection: React.FC = () => {
       action={renderCleanButton()}
     >
       {result.map((list, index) => {
-        return <ResultItem index={index} list={list} target={target} />
+        return (
+          <ResultItem key={index} index={index} list={list} target={target} />
+        )
       })}
     </Block>
   )
