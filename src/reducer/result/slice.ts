@@ -1,5 +1,4 @@
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit'
-import { AppThunk } from '../config/store'
 
 export type ResultState = number[][]
 export type ResultActions = {
@@ -26,18 +25,5 @@ const resultSlice = createSlice<ResultState, ResultActions>({
     },
   },
 })
-
-export const resultPush = (item: number[] | number[][]): AppThunk => (
-  dispatch
-) => {
-  dispatch(resultSlice.actions.push(item))
-}
-
-export const resultClean = (): AppThunk => (dispatch, getState) => {
-  const { result } = getState()
-  if (result.length > 0) {
-    dispatch(resultSlice.actions.clean())
-  }
-}
 
 export default resultSlice
