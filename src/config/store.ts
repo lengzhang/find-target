@@ -11,6 +11,7 @@ const configureStore = (preloadedState?: DeepPartial<RootState>) => {
   const store = configureToolkitStore({
     reducer: rootReducer,
     preloadedState,
+    devTools: process.env.NODE_ENV !== 'production',
   })
   return store
 }
