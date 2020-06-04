@@ -35,7 +35,7 @@ const inputSlice = createSlice<InputState, InputActions>({
 export const changeInput = (key: InputKeyType, value: string) => (dispatch) => {
   value =
     key === 'item'
-      ? value.replace(/[^\d\.\s]/g, '')
+      ? value.replace(/[^\d\.\s\(\)]/g, '')
       : key === 'target'
       ? value.replace(/!(\d|\.)/g, '').replace(/(?<=\..*)\./g, '')
       : key === 'range'
