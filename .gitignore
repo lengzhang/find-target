@@ -30,3 +30,4 @@ yarn-error.log*
 .env.build
 
 .DS_Store
+.vercel

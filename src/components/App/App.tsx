@@ -1,5 +1,4 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 
 import MuiBox from '@material-ui/core/Box'
 import MuiContainer from '@material-ui/core/Container'
@@ -12,8 +11,6 @@ import ListSection from '../ListSection'
 import ResultSection from '../ResultSection'
 
 const App: React.FC = () => {
-  const dispatch = useDispatch()
-
   return (
     <MuiContainer
       maxWidth="md"

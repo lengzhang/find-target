@@ -1,8 +1,6 @@
 import React from 'react'
 
 import MuiTextField from '@material-ui/core/TextField'
-import MuiIconButton from '@material-ui/core/IconButton'
-import MuiInputAdornment from '@material-ui/core/InputAdornment'
 
 import { InputProps } from './types'
 
@@ -12,8 +10,7 @@ const Input: React.FC<InputProps> = ({
   type,
   onChange,
   onKeyPress,
-  onClick,
-  renderIcon,
+  InputProps: customInputProps,
 }) => {
   return (
     <MuiTextField
@@ -26,16 +23,7 @@ const Input: React.FC<InputProps> = ({
       InputLabelProps={{
         shrink: true,
       }}
-      InputProps={{
-        endAdornment:
-          typeof onClick === 'function' ? (
-            <MuiInputAdornment position="end">
-              <MuiIconButton href="" onClick={onClick}>
-                {typeof renderIcon === 'function' && renderIcon()}
-              </MuiIconButton>
-            </MuiInputAdornment>
-          ) : undefined,
-      }}
+      InputProps={customInputProps}
       type={type || 'text'}
     />
   )

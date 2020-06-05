@@ -1,24 +1,3 @@
-// import { createStore, applyMiddleware } from 'redux'
-// import thunkMiddleware from 'redux-thunk'
-// import { composeWithDevTools } from 'redux-devtools-extension'
-
-// import rootReducer, { RootState } from '../reducer'
-
-// const configureStore = (preloadedState?: RootState) => {
-//   const middlewares = [thunkMiddleware]
-//   const middleWareEnhancer = applyMiddleware(...middlewares)
-
-//   const store = createStore(
-//     rootReducer,
-//     preloadedState,
-//     composeWithDevTools(middleWareEnhancer)
-//   )
-
-//   return store
-// }
-
-// export default configureStore
-
 import {
   configureStore as configureToolkitStore,
   DeepPartial,
@@ -32,6 +11,7 @@ const configureStore = (preloadedState?: DeepPartial<RootState>) => {
   const store = configureToolkitStore({
     reducer: rootReducer,
     preloadedState,
+    devTools: process.env.NODE_ENV !== 'production',
   })
   return store
 }

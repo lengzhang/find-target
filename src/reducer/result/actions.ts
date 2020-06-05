@@ -21,8 +21,11 @@ export const calculateResult = (): AppThunk => (dispatch, getState) => {
   const { list, input } = getState()
   const target = parseFloatNumber(input.target)
   const range = parseFloatNumber(input.range)
+  const numResult = parseInt(input.numResult)
   if (list.length <= 0 || Number.isNaN(target) || Number.isNaN(range)) return
   const result = []
-  findTarget(list, target, range, 0, list.length, [], result)
+  const itemList = [...list].sort((a, b) => a - b)
+  findTarget(itemList, target, range, 0, list.length, [], result, numResult)
+  dispatch(resultSlice.actions.clean())
   dispatch(resultSlice.actions.push(result))
 }

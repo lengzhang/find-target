@@ -1,19 +1,18 @@
 import React from 'react'
 import App from 'next/app'
-import Head from 'next/head'
-
-import { Provider as ReduxProvider } from 'react-redux'
 
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import 'typeface-roboto'
 
-import createStore from '../config/store'
+import Head from '../components/Header'
+
+import { wrapper } from '../config/storeWrapper'
 
 import theme from '../theme'
 
-export default class MyApp extends App {
+class MyApp extends App {
   componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side')
@@ -27,8 +26,7 @@ export default class MyApp extends App {
 
     return (
       <React.Fragment>
-        <Head>
-          <title>Leng Page</title>
+        <Head title="Find Target">
           <meta
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width"
@@ -37,11 +35,11 @@ export default class MyApp extends App {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <ReduxProvider store={createStore()}>
-            <Component {...pageProps} />
-          </ReduxProvider>
+          <Component {...pageProps} />
         </ThemeProvider>
       </React.Fragment>
     )
   }
 }
+
+export default wrapper.withRedux(MyApp)

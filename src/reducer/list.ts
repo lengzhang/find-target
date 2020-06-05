@@ -16,7 +16,7 @@ const listSlice = createSlice<ListState, ListActions>({
     push: (state, action) => {
       if (Array.isArray(action.payload)) state.push(...action.payload)
       else state.push(action.payload)
-      state.sort((a, b) => a - b)
+      // state.sort((a, b) => a - b)
     },
     remove: (state, action) => {
       state = state.filter((e, i) => i !== action.payload)

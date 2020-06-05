@@ -8,7 +8,8 @@ interface FindTarget {
     start: number,
     end: number,
     cur: number[],
-    result: number[][]
+    result: number[][],
+    numResult?: number
   ): void
 }
 
@@ -19,8 +20,10 @@ export const findTarget: FindTarget = (
   start,
   end,
   cur,
-  result
+  result,
+  numResult = 0
 ) => {
+  if (numResult > 0 && result.length >= numResult) return
   if (target < -range) return
   if (target <= range) {
     result.push([...cur])
@@ -35,7 +38,8 @@ export const findTarget: FindTarget = (
       i + 1,
       end,
       [...cur, list[i]],
-      result
+      result,
+      numResult
     )
     while (i <= limit - 1 && list[i] === list[i + 1]) ++i
   }
