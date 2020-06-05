@@ -14,11 +14,14 @@ import ResultItem from './ResultItem'
 import { parseFloatNumber } from '../../utils'
 
 const selector = (state: RootState) => {
-  return { result: state.result, target: parseFloatNumber(state.input.target) }
+  return {
+    list: state.result.list,
+    target: parseFloatNumber(state.input.target),
+  }
 }
 
 const ResultSection: React.FC = () => {
-  const { result, target } = useSelector(selector)
+  const { list, target } = useSelector(selector)
   const dispatch = useDispatch()
 
   const onResultClean = () => {
@@ -30,7 +33,7 @@ const ResultSection: React.FC = () => {
       <MuiIconButton
         aria-label="clean list"
         onClick={onResultClean}
-        disabled={result.length <= 0}
+        disabled={list.length <= 0}
       >
         <ClearAllIcon />
       </MuiIconButton>
@@ -39,12 +42,12 @@ const ResultSection: React.FC = () => {
 
   return (
     <Block
-      header={`Result (${result.length})`}
-      showChildren={result.length > 0}
+      header={`Result (${list.length})`}
+      showChildren={list.length > 0}
       action={renderCleanButton()}
     >
       <MuiGrid container spacing={2}>
-        {result.map((list, index) => {
+        {list.map((list, index) => {
           return (
             <MuiGrid item key={index} xs={12}>
               <ResultItem index={index} list={list} target={target} />

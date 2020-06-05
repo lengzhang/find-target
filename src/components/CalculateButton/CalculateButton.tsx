@@ -11,15 +11,19 @@ const selector = (state: RootState) => {
     list: state.list,
     target: parseFloatNumber(state.input.target),
     range: parseFloatNumber(state.input.target),
+    calculateStatus: state.result.status,
   }
 }
 
 const CalculateButton: React.FC = () => {
-  const { list, target, range } = useSelector(selector)
+  const { list, target, range, calculateStatus } = useSelector(selector)
   const dispatch = useDispatch()
 
   const isDisabled =
-    list.length <= 0 || Number.isNaN(target) || Number.isNaN(range)
+    list.length <= 0 ||
+    Number.isNaN(target) ||
+    Number.isNaN(range) ||
+    calculateStatus !== 0
 
   const onClick = () => {
     dispatch(calculateResult())
@@ -32,7 +36,7 @@ const CalculateButton: React.FC = () => {
       disabled={isDisabled}
       onClick={onClick}
     >
-      Calculate
+      {calculateStatus == 1 ? 'Calculating...' : 'Calculate'}
     </MuiButton>
   )
 }

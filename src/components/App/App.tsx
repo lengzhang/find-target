@@ -11,6 +11,12 @@ import ListSection from '../ListSection'
 import ResultSection from '../ResultSection'
 
 const App: React.FC = () => {
+  React.useEffect(() => {
+    if (window && window.Worker && !window.resultWorker) {
+      window.resultWorker = new Worker('./worker.js')
+    }
+  }, [])
+
   return (
     <MuiContainer
       maxWidth="md"

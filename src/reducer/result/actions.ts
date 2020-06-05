@@ -11,21 +11,53 @@ export const resultPush = (item: number[] | number[][]): AppThunk => (
 }
 
 export const resultClean = (): AppThunk => (dispatch, getState) => {
-  const { result } = getState()
-  if (result.length > 0) {
+  const {
+    result: { list },
+  } = getState()
+  if (list.length > 0) {
     dispatch(resultSlice.actions.clean())
   }
 }
 
 export const calculateResult = (): AppThunk => (dispatch, getState) => {
+  dispatch(resultSlice.actions.updateStatus(1))
   const { list, input } = getState()
+
   const target = parseFloatNumber(input.target)
   const range = parseFloatNumber(input.range)
-  const numResult = parseInt(input.numResult)
-  if (list.length <= 0 || Number.isNaN(target) || Number.isNaN(range)) return
+  const numResult = Math.abs(parseInt(input.numResult))
+
+  if (list.length <= 0 || Number.isNaN(target) || Number.isNaN(range)) {
+    dispatch(resultSlice.actions.updateStatus(0))
+    return
+  }
+
   const result = []
   const itemList = [...list].sort((a, b) => a - b)
-  findTarget(itemList, target, range, 0, list.length, [], result, numResult)
+
   dispatch(resultSlice.actions.clean())
-  dispatch(resultSlice.actions.push(result))
+
+  if (window && window.resultWorker) {
+    window.resultWorker.onmessage = (e: MessageEvent) => {
+      switch (e.data.code) {
+        case 1:
+          dispatch(resultSlice.actions.push(e.data.list))
+          break
+
+        default:
+          dispatch(resultSlice.actions.updateStatus(0))
+          break
+      }
+    }
+    window.resultWorker.postMessage({
+      list: itemList,
+      target,
+      range,
+      numResult,
+    })
+  } else {
+    findTarget(itemList, target, range, 0, list.length, [], result, numResult)
+    dispatch(resultSlice.actions.push(result))
+    dispatch(resultSlice.actions.updateStatus(0))
+  }
 }
