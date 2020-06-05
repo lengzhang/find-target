@@ -60,16 +60,10 @@ const InputSection: React.FC = () => {
           value={target}
           onChange={onChange('target')}
           onKeyPress={onEnterPress(() => dispatch(calculateResult()))}
-          type="number"
         />
       </MuiGrid>
       <MuiGrid item xs={12} sm={6}>
-        <Input
-          label="Range"
-          value={range}
-          onChange={onChange('range')}
-          type="number"
-        />
+        <Input label="Range" value={range} onChange={onChange('range')} />
       </MuiGrid>
     </MuiGrid>
   )

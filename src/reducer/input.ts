@@ -1,11 +1,14 @@
 import { createSlice, CaseReducer, PayloadAction } from '@reduxjs/toolkit'
 import { AppThunk } from '../config/store'
 
-export type InputKeyType = 'item' | 'target' | 'range'
+import { formatNumber } from 'src/utils'
+
+export type InputKeyType = 'item' | 'target' | 'range' | 'num-result'
 export interface InputState {
   item: string
   target: string
   range: string
+  numResult: string
 }
 export type InputActions = {
   change: CaseReducer<
@@ -23,6 +26,7 @@ const inputSlice = createSlice<InputState, InputActions>({
     item: '',
     target: '',
     range: '0',
+    numResult: '1',
   },
   reducers: {
     change: (state, action) => {
@@ -33,19 +37,23 @@ const inputSlice = createSlice<InputState, InputActions>({
 })
 
 export const changeInput = (key: InputKeyType, value: string) => (dispatch) => {
-  value =
-    key === 'item'
-      ? value.replace(/[^\d\.\s\(\)]/g, '')
-      : key === 'target'
-      ? value.replace(/!(\d|\.)/g, '').replace(/(?<=\..*)\./g, '')
-      : key === 'range'
-      ? value
-        ? (value = value.replace(/!(\d)/g, ''))
-        : '0'
-      : value
+  if (key === 'item') {
+    value = value
+      .split(' ')
+      .map((str) => {
+        if (!str) return ''
+        const match = str.match(/[^()]+/g)
+        const formatedNum = formatNumber(match ? match[0] : '', true)
 
-  if (value.length > 1) value = value.replace(/^0+/g, '')
-
+        return `${str[0] === '(' ? '(' : ''}${formatedNum}${
+          formatedNum && str[str.length - 1] === ')' ? ')' : ''
+        }`
+      })
+      .join(' ')
+  } else {
+    value = formatNumber(value, key === 'target')
+  }
+  if (!value && key === 'range') value = '0'
   dispatch(inputSlice.actions.change({ key, value }))
 }
 
