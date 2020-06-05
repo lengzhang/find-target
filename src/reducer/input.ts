@@ -3,7 +3,7 @@ import { AppThunk } from '../config/store'
 
 import { formatNumber } from 'src/utils'
 
-export type InputKeyType = 'item' | 'target' | 'range' | 'num-result'
+export type InputKeyType = 'item' | 'target' | 'range' | 'numResult'
 export interface InputState {
   item: string
   target: string
@@ -36,7 +36,9 @@ const inputSlice = createSlice<InputState, InputActions>({
   },
 })
 
-export const changeInput = (key: InputKeyType, value: string) => (dispatch) => {
+export const changeInput = (key: InputKeyType, value: string): AppThunk => (
+  dispatch
+) => {
   if (key === 'item') {
     value = value
       .split(' ')
@@ -51,9 +53,12 @@ export const changeInput = (key: InputKeyType, value: string) => (dispatch) => {
       })
       .join(' ')
   } else {
-    value = formatNumber(value, key === 'target')
+    value = formatNumber(value, key === 'target' || key === 'range')
   }
-  if (!value && key === 'range') value = '0'
+  if (!value && (key === 'range' || key === 'numResult')) value = '0'
+  else if (value.length > 0 && key === 'numResult') {
+    value = value.replace(/^-/, '')
+  }
   dispatch(inputSlice.actions.change({ key, value }))
 }
 
