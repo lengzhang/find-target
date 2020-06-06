@@ -35,7 +35,7 @@ const App: React.FC = () => {
     <MuiContainer className={classes.container} maxWidth="md" disableGutters>
       <MuiPaper className={classes.paper}>
         <MuiBox padding={3}>
-          <MuiTypography variant="h4">DPH HFA SPA Checker</MuiTypography>
+          <MuiTypography variant="h4">Find Target</MuiTypography>
           <MuiBox marginTop={2}>
             <InputSection />
           </MuiBox>

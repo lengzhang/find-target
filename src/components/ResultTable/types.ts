@@ -82,3 +82,8 @@ export interface ResultToolbarProps {
   disableCleanBtn?: boolean
   onResultClean: () => void
 }
+
+/* ResultTableRow */
+export interface ResultTableRowProps extends Item {
+  headCells: HeadCell[]
+}

@@ -14,6 +14,7 @@ import TableRow from '@material-ui/core/TableRow'
 
 import ResultToolbar from './ResultToolbar'
 import ResultTableHeaderRow from './ResultTableHeaderRow'
+import ResultTableRow from './ResultTableRow'
 
 import useResultTable from './useResultTable'
 
@@ -75,37 +76,11 @@ const ResultTable: React.FC = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((itemProps, i) => {
                   return (
-                    <TableRow key={`${itemProps.index}`} hover>
-                      {headCells.map(({ id, align, colSpan }) => {
-                        return (
-                          <TableCell
-                            key={`${itemProps.index}-${id}`}
-                            align={align}
-                            colSpan={colSpan}
-                          >
-                            {id === 'items' ? (
-                              <Grid
-                                container
-                                direction="row"
-                                wrap="wrap"
-                                spacing={2}
-                              >
-                                {itemProps.items.map((e, j) => (
-                                  <Grid
-                                    key={`${itemProps.index}-${id}-${e}`}
-                                    item
-                                  >
-                                    <Typography variant="body1">{e}</Typography>
-                                  </Grid>
-                                ))}
-                              </Grid>
-                            ) : (
-                              <span key={`${i}-${id}`}>{itemProps[id]}</span>
-                            )}
-                          </TableCell>
-                        )
-                      })}
-                    </TableRow>
+                    <ResultTableRow
+                      key={`${itemProps.index}`}
+                      {...itemProps}
+                      headCells={headCells}
+                    />
                   )
                 })}
             </TableBody>
