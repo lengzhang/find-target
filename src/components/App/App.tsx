@@ -9,7 +9,6 @@ import MuiTypography from '@material-ui/core/Typography'
 import InputSection from '../InputSection'
 import CalculateButton from '../CalculateButton'
 import ListSection from '../ListSection'
-import ResultSection from '../ResultSection'
 import ResultTable from 'src/components/ResultTable'
 
 const useStyles = makeStyles<Theme>((theme) =>
