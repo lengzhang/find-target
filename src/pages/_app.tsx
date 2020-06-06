@@ -21,6 +21,12 @@ class MyApp extends App {
     }
   }
 
+  componentWillUnmount() {
+    if (window && window.Worker && window.resultWorker) {
+      window.resultWorker.terminate()
+    }
+  }
+
   render() {
     const { Component, pageProps } = this.props
 
