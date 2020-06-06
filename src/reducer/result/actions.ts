@@ -42,7 +42,7 @@ export const calculateResult = (): AppThunk => (dispatch, getState) => {
     window.resultWorker.onmessage = (e: MessageEvent) => {
       switch (e.data.code) {
         case 0:
-          dispatch(resultSlice.actions.updateStatus(0))
+          dispatch(resultSlice.actions.updateStatus(1))
           break
 
         case 1:
@@ -51,6 +51,7 @@ export const calculateResult = (): AppThunk => (dispatch, getState) => {
 
         case 2:
           window.resultWorker.terminate()
+          window.resultWorker = null
           dispatch(resultSlice.actions.updateStatus(0))
           break
 
