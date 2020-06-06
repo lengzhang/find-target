@@ -37,11 +37,21 @@ export const calculateResult = (): AppThunk => (dispatch, getState) => {
 
   dispatch(resultSlice.actions.clean())
 
-  if (window && window.resultWorker) {
+  if (window && window.Worker) {
+    window.resultWorker = new Worker('./worker.js')
     window.resultWorker.onmessage = (e: MessageEvent) => {
       switch (e.data.code) {
+        case 0:
+          dispatch(resultSlice.actions.updateStatus(0))
+          break
+
         case 1:
           dispatch(resultSlice.actions.push(e.data.list))
+          break
+
+        case 2:
+          window.resultWorker.terminate()
+          dispatch(resultSlice.actions.updateStatus(0))
           break
 
         default:
