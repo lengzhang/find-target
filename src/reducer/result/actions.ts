@@ -78,7 +78,7 @@ export const cancelCalculation = (): AppThunk => (dispatch, getState) => {
     result: { status },
   } = getState()
 
-  if (status === 1) {
+  if (window && window.Worker && status === 1) {
     window.resultWorker.terminate()
     window.resultWorker = null
     dispatch(resultSlice.actions.updateStatus(0))

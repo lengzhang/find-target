@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles'
 
 import Button from '@material-ui/core/Button'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel'
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions'
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
+import Accordion from '@material-ui/core/Accordion'
+import AccordionActions from '@material-ui/core/AccordionActions'
+import AccordionDetails from '@material-ui/core/AccordionDetails'
+import AccordionSummary from '@material-ui/core/AccordionSummary'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 
@@ -55,17 +55,17 @@ const ListSection: React.FC = () => {
   }
 
   return (
-    <ExpansionPanel expanded={expanded}>
-      <ExpansionPanelSummary
+    <Accordion expanded={expanded}>
+      <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"
         id="panel1a-header"
         onClick={onExpandedChange}
       >
         <Typography variant="h6">{`List (${list.length})`}</Typography>
-      </ExpansionPanelSummary>
+      </AccordionSummary>
       {list.length > 0 && (
-        <ExpansionPanelActions>
+        <AccordionActions>
           <Button
             aria-label="clean list"
             onClick={onListClean}
@@ -74,9 +74,9 @@ const ListSection: React.FC = () => {
           >
             Clean All Items
           </Button>
-        </ExpansionPanelActions>
+        </AccordionActions>
       )}
-      <ExpansionPanelDetails>
+      <AccordionDetails>
         <Grid container spacing={1}>
           {list.map((item, index) => {
             return (
@@ -88,8 +88,8 @@ const ListSection: React.FC = () => {
             )
           })}
         </Grid>
-      </ExpansionPanelDetails>
-    </ExpansionPanel>
+      </AccordionDetails>
+    </Accordion>
   )
 }
 
