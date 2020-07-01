@@ -72,3 +72,15 @@ export const calculateResult = (): AppThunk => (dispatch, getState) => {
     dispatch(resultSlice.actions.updateStatus(0))
   }
 }
+
+export const cancelCalculation = (): AppThunk => (dispatch, getState) => {
+  const {
+    result: { status },
+  } = getState()
+
+  if (status === 1) {
+    window.resultWorker.terminate()
+    window.resultWorker = null
+    dispatch(resultSlice.actions.updateStatus(0))
+  }
+}
