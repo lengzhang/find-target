@@ -37,7 +37,7 @@ const ResultTableRow: React.FC<ResultTableRowProps> = ({
       <TableCell align={headCells[1].align} colSpan={headCells[1].colSpan}>
         <Grid container direction="row" wrap="wrap" spacing={2}>
           {items.map((e, j) => (
-            <Grid key={`${index}-items-${e}`} item>
+            <Grid key={`${index}-items-${e}-${j}`} item>
               <Typography variant="body1">{e}</Typography>
             </Grid>
           ))}
