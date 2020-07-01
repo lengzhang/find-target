@@ -1,8 +1,8 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
-import MuiButton from '@material-ui/core/Button'
-import LinearProgress from '@material-ui/core/LinearProgress'
+import Button from '@material-ui/core/Button'
+import Grid from '@material-ui/core/Grid'
 
 import { RootState, calculateResult, cancelCalculation } from '../../reducer'
 import { parseFloatNumber } from '../../utils'
@@ -35,21 +35,25 @@ const CalculateButton: React.FC = () => {
   }
 
   return (
-    <>
-      <MuiButton
-        fullWidth
-        variant="outlined"
-        disabled={isDisabled}
-        onClick={onClick}
-      >
-        {calculateStatus === 1 ? 'Calculating...' : 'Calculate'}
-      </MuiButton>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <Button
+          fullWidth
+          variant="outlined"
+          disabled={isDisabled}
+          onClick={onClick}
+        >
+          {calculateStatus === 1 ? 'Calculating...' : 'Calculate'}
+        </Button>
+      </Grid>
       {calculateStatus === 1 && (
-        <MuiButton onClick={onCancel} variant="outlined">
-          Cancel
-        </MuiButton>
+        <Grid item xs={12}>
+          <Button fullWidth onClick={onCancel} variant="outlined">
+            Cancel
+          </Button>
+        </Grid>
       )}
-    </>
+    </Grid>
   )
 }
 

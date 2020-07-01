@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react'
-import App, { AppProps } from 'next/app'
+import { AppProps } from 'next/app'
 
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import { useStore } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
-import { persistStore, persistReducer } from 'redux-persist'
-import { ReactReduxContext } from 'react-redux'
+import { persistStore } from 'redux-persist'
 
 import 'typeface-roboto'
 
@@ -40,6 +39,10 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
       </Head>
       <PersistGate loading={null} persistor={persistor}>
