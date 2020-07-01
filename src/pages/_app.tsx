@@ -1,8 +1,12 @@
-import React from 'react'
-import App from 'next/app'
+import React, { useEffect } from 'react'
+import { AppProps } from 'next/app'
 
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
+
+import { useStore } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
 
 import 'typeface-roboto'
 
@@ -12,40 +16,44 @@ import { wrapper } from '../config/storeWrapper'
 
 import theme from '../theme'
 
-class MyApp extends App {
-  componentDidMount() {
+const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
+  const store = useStore()
+  const persistor = persistStore(store)
+
+  useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side')
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles)
     }
-  }
-
-  componentWillUnmount() {
-    if (window && window.Worker && window.resultWorker) {
-      window.resultWorker.terminate()
+    return () => {
+      if (window && window.Worker && window.resultWorker) {
+        window.resultWorker.terminate()
+      }
     }
-  }
+  }, [])
 
-  render() {
-    const { Component, pageProps } = this.props
-
-    return (
-      <React.Fragment>
-        <Head title="Find Target">
-          <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
-          />
-        </Head>
+  return (
+    <React.Fragment>
+      <Head title="Find Target">
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+      </Head>
+      <PersistGate loading={null} persistor={persistor}>
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <Component {...pageProps} />
         </ThemeProvider>
-      </React.Fragment>
-    )
-  }
+      </PersistGate>
+    </React.Fragment>
+  )
 }
 
 export default wrapper.withRedux(MyApp)

@@ -7,7 +7,11 @@ import resultSlice from './slice'
 export const resultPush = (item: number[] | number[][]): AppThunk => (
   dispatch
 ) => {
-  dispatch(resultSlice.actions.push(item))
+  if (typeof item[0] === 'number') {
+    dispatch(resultSlice.actions.push(item as number[]))
+  } else {
+    dispatch(resultSlice.actions.pushMore(item as number[][]))
+  }
 }
 
 export const resultClean = (): AppThunk => (dispatch, getState) => {
@@ -15,7 +19,7 @@ export const resultClean = (): AppThunk => (dispatch, getState) => {
     result: { list },
   } = getState()
   if (list.length > 0) {
-    dispatch(resultSlice.actions.clean())
+    dispatch(resultSlice.actions.initialize())
   }
 }
 
@@ -35,7 +39,8 @@ export const calculateResult = (): AppThunk => (dispatch, getState) => {
   const result = []
   const itemList = [...list].sort((a, b) => a - b)
 
-  dispatch(resultSlice.actions.clean())
+  dispatch(resultSlice.actions.initialize())
+  dispatch(resultSlice.actions.setTarget(target))
 
   if (window && window.Worker) {
     window.resultWorker = new Worker('./worker.js')
@@ -68,7 +73,19 @@ export const calculateResult = (): AppThunk => (dispatch, getState) => {
     })
   } else {
     findTarget(itemList, target, range, 0, list.length, [], result, numResult)
-    dispatch(resultSlice.actions.push(result))
+    dispatch(resultSlice.actions.pushMore(result))
+    dispatch(resultSlice.actions.updateStatus(0))
+  }
+}
+
+export const cancelCalculation = (): AppThunk => (dispatch, getState) => {
+  const {
+    result: { status },
+  } = getState()
+
+  if (window && window.Worker && status === 1) {
+    window.resultWorker.terminate()
+    window.resultWorker = null
     dispatch(resultSlice.actions.updateStatus(0))
   }
 }
